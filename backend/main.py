@@ -115,19 +115,19 @@ app.add_middleware(
 
 # ── REST Endpoints ────────────────────────────────────────────────────────────
 
-@app.get("/api/status")
+@app.get("/status")
 async def get_status():
     """Current real-time system snapshot."""
     return latest_state if latest_state else {"status": "initializing"}
 
 
-@app.get("/api/economics")
+@app.get("/economics")
 async def get_economics():
     """Full economic analysis: LCOE, payback, battery degradation."""
     return full_economic_summary()
 
 
-@app.get("/api/baseline")
+@app.get("/baseline")
 async def get_baseline():
     """24-hour comparison: smart (Opti-Zero) vs dumb scheduling."""
     hourly_data = simulator.get_24h_baseline_comparison()
@@ -149,7 +149,7 @@ async def get_baseline():
     }
 
 
-@app.post("/api/inject-fault")
+@app.post("/inject-fault")
 async def inject_fault():
     """Trigger a simulated grid frequency fault for VSG demo."""
     vsg.inject_fault()
@@ -160,7 +160,7 @@ async def inject_fault():
     }
 
 
-@app.post("/api/demo-mode")
+@app.post("/demo-mode")
 async def set_demo_mode(mode: str):
     """Force simulator to specific scenarios for judge demonstration."""
     if mode == "solar_peak":
@@ -179,7 +179,7 @@ async def set_demo_mode(mode: str):
     return {"success": True, "message": f"Time shifted to {msg}"}
 
 
-@app.post("/api/toggle-kvar")
+@app.post("/toggle-kvar")
 async def toggle_kvar():
     """Engage/Disengage BESS inverter VAR compensation for PF correction."""
     simulator.bess_kvar_compensation = not simulator.bess_kvar_compensation

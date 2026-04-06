@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 
-const API_BASE = 'http://localhost:8000';
+const API_BASE = '';
 export const MAX_HISTORY = 60;
 
 /**
