@@ -4,8 +4,7 @@
       "entrypoint": "frontend",
       "routePrefix": "/",
       "installCommand": "npm install --prefix frontend",
-      "buildCommand": "npm run build --prefix frontend",
-      "outputDirectory": "frontend/dist"
+      "buildCommand": "npm run build --prefix frontend"
     },
     "backend": {
       "entrypoint": "backend/main.py",
