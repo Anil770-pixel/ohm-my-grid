@@ -60,7 +60,17 @@ async def simulation_loop():
     while True:
         try:
             sim_data = simulator.step()
+        except Exception as step_error:
+            logger.error(f"Simulator step error: {step_error}")
+            import traceback
+            traceback.print_exc()
+            break
+        
+        try:
             vsg_data = vsg.update(dt=1.0)
+        except Exception as vsg_error:
+            logger.error(f"VSG update error: {vsg_error}")
+            break
 
             payload = {
                 **sim_data,
@@ -225,3 +235,8 @@ async def websocket_endpoint(websocket: WebSocket):
     except Exception as e:
         active_connections.discard(websocket)
         logger.error(f"WebSocket error: {e}")
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")
